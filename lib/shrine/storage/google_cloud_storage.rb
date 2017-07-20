@@ -116,6 +116,9 @@ class Shrine
         to_sign = [method, content_md5, content_type, expires, headers, path].compact.join("\n")
 
         signing_key = options[:signing_key]
+        puts "BUCKET: #{@bucket}"
+        puts "SIGNING KEY: #{signing_key}"
+        puts "OPTIONS HASH: #{options}"
         signing_key = OpenSSL::PKey::RSA.new(signing_key) unless signing_key.respond_to?(:sign)
         signature = Base64.strict_encode64(signing_key.sign(OpenSSL::Digest::SHA256.new, to_sign)).delete("\n")
 
